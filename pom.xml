@@ -26,6 +26,12 @@
             <version>2.13.5</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>ar.com.quetedebo</groupId>
+            <artifactId>CoreQueTeDebo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

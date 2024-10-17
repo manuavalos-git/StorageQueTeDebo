@@ -1,5 +1,7 @@
 package ar.com.quetedebo.storage;
 
+import ar.com.quetedebo.core.Debt;
+import ar.com.quetedebo.core.QueTeDebo;
 import ar.com.quetedebo.domain.PaymentRecord;
 import ar.com.quetedebo.implementatios.InMemoryPaymentHistoryStorage;
 import ar.com.quetedebo.implementatios.JsonPaymentHistoryStorage;
@@ -11,8 +13,9 @@ import java.util.Observer;
 public class PaymentHistory implements Observer {
     private final PaymentHistoryStorage storage;
 
-    public PaymentHistory(String storageType) {
+    public PaymentHistory(String storageType, QueTeDebo queTeDebo) {
         this.storage=getPaymentHistoryStorage(storageType);
+        queTeDebo.addObserver(this);
     }
 
     public void addRecord(PaymentRecord record) {
@@ -47,6 +50,17 @@ public class PaymentHistory implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("PAGO");
+        if (arg instanceof List<?>) {
+            List<?> objList = (List<?>) arg;
+
+            for (Object obj : objList) {
+                if (obj instanceof Debt) {
+                    Debt debt = (Debt) obj;
+                    System.out.println(debt);
+                }
+            }
+        } else {
+            System.out.println("El argumento no es una lista de deudas.");
+        }
     }
 }
