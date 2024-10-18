@@ -12,9 +12,11 @@ import ar.com.quetedebo.storage.PaymentHistory;
 
 public class HistoryObserverRemote extends UnicastRemoteObject implements ObserverRemote {
 	private static final long serialVersionUID = 6716179050302800849L;
+	private HistoryUI superIllegalMVCBreakingUI;
 
 	protected HistoryObserverRemote() throws RemoteException {
 		super();
+		superIllegalMVCBreakingUI = new HistoryUI();
 	}
 
 	@Override
@@ -30,5 +32,6 @@ public class HistoryObserverRemote extends UnicastRemoteObject implements Observ
 			
 			paymentHistory.addRecord(paymentRecord);
 		}
+		superIllegalMVCBreakingUI.addDebt(debts);
 	}
 }
