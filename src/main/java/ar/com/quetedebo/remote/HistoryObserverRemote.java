@@ -21,11 +21,12 @@ public class HistoryObserverRemote extends UnicastRemoteObject implements Observ
 
 	@Override
 	public void update(List<Debt> debts) throws RemoteException {
+		// FIXME crear un mapper y ver como le vamos a pasar el metodo de pago
 		System.out.println("Notificación recibida desde Core: " + debts.toString());
 		PaymentHistory paymentHistory = new PaymentHistory("json");
 		for(Debt debt : debts) {
 			PaymentRecord paymentRecord = new PaymentRecord();
-			paymentRecord.setPaymentMethod("metodo de pago");
+			paymentRecord.setPaymentMethod("Uala");
 			paymentRecord.setAddressPayment(debt.getAddressPayment());
 			paymentRecord.setAmount(debt.getAmount());
 			paymentRecord.setPaymentDate(LocalDateTime.now());
