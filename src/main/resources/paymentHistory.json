@@ -43,4 +43,9 @@
   "amount" : 8300.0,
   "paymentDate" : "2024-10-18T16:00:06.1800513",
   "addressPayment" : "0000005849959988947454"
+}, {
+  "paymentMethod" : "metodo de pago",
+  "amount" : 8000000.0,
+  "paymentDate" : "2024-10-18T16:04:18.7241827",
+  "addressPayment" : "77686968768"
 } ]
