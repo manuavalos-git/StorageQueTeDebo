@@ -16,13 +16,9 @@ public class JsonPaymentHistoryStorage implements PaymentHistoryStorage {
     private final File file;
     private final ObjectMapper objectMapper;
 
-    public JsonPaymentHistoryStorage(String filePath, ObjectMapper objectMapper) {
-        this.file = new File(filePath);
-        this.objectMapper = objectMapper != null ? objectMapper : createDefaultObjectMapper();
-    }
-
-    public JsonPaymentHistoryStorage(String filePath) {
-        this(filePath, null);
+    public JsonPaymentHistoryStorage() {
+        this.file = new File("paymentHistory.json");
+        this.objectMapper = createDefaultObjectMapper();
     }
 
     private ObjectMapper createDefaultObjectMapper() {
