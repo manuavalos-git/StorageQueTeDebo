@@ -1,16 +1,22 @@
 package ar.com.quetedebo.storage;
 
-import java.util.List;
 
+import ar.com.quetedebo.core.QueTeDebo;
 import ar.com.quetedebo.domain.PaymentRecord;
-import ar.com.quetedebo.implementatios.InMemoryPaymentHistoryStorage;
-import ar.com.quetedebo.implementatios.JsonPaymentHistoryStorage;
+import ar.com.quetedebo.domain.RecordMapper;
 
-public class PaymentHistory {
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+public class PaymentHistory implements Observer {
     private final PaymentHistoryStorage storage;
+    private final RecordMapper recordMapper;
 
-    public PaymentHistory(String storageType) {
-        this.storage=getPaymentHistoryStorage(storageType);
+    public PaymentHistory(String storagePath, QueTeDebo queTeDebo) {
+        this.storage= getPaymentHistoryStorage(storagePath);
+        this.recordMapper=new RecordMapper();
+        queTeDebo.addObserver(this);
     }
 
     public void addRecord(PaymentRecord record) {
@@ -32,15 +38,14 @@ public class PaymentHistory {
         }
     }
 
-    private PaymentHistoryStorage getPaymentHistoryStorage(String storageType) {
-        switch (storageType.toLowerCase()) {
-            case "json":
-                return new JsonPaymentHistoryStorage("src/main/resources/paymentHistory.json");
-            case "memory":
-                return new InMemoryPaymentHistoryStorage();
-            default:
-                throw new IllegalArgumentException("Invalid storage type: " + storageType);
-        }
+    private static PaymentHistoryStorage getPaymentHistoryStorage(String storagePath) {
+        return new PaymentHistoryStorageFactory(storagePath).createPaymentHistoryStorage();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+            QueTeDebo queTeDebo = (QueTeDebo) o;
+            queTeDebo.getDebts().forEach(debt ->this.addRecord(recordMapper.mapPaymentRecord(String.valueOf(arg), debt)));
     }
 
 }
