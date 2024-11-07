@@ -34,7 +34,7 @@ public class JsonPaymentHistoryStorage implements PaymentHistoryStorage {
         history.add(record);
 
         try {
-            objectMapper.writeValue(file, history);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, history);
         } catch (IOException e) {
             throw new RuntimeException("Error saving payment history to file: " + file.getAbsolutePath(), e);
         }
