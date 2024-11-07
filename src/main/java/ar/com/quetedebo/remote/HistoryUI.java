@@ -4,11 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -85,7 +87,10 @@ public class HistoryUI extends JFrame {
 		transferedLbl.setText("$" + totalAmount);
 
 		topPanel.removeAll();
-		List<String> topReceiversList = topReceivers.entrySet().stream().sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())).map(Map.Entry::getKey).limit(5).toList(); //<String, Float>
+		List<String> topReceiversList = new ArrayList<>(topReceivers.keySet());
+		topReceiversList.sort((r1, r2) -> topReceivers.get(r2).compareTo(topReceivers.get(r1)));
+		topReceiversList = topReceiversList.subList(0, Math.min(5, topReceiversList.size()));
+
 		for (String topReceiver : topReceiversList) {
 			JLabel topReceiverLabel = new JLabel(topReceiver + ": $" + topReceivers.get(topReceiver));
 			topPanel.add(topReceiverLabel);
