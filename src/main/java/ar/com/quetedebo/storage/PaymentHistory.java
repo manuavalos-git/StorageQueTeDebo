@@ -1,5 +1,6 @@
 package ar.com.quetedebo.storage;
 
+
 import ar.com.quetedebo.core.QueTeDebo;
 import ar.com.quetedebo.domain.PaymentRecord;
 import ar.com.quetedebo.domain.RecordMapper;
@@ -46,4 +47,5 @@ public class PaymentHistory implements Observer {
             QueTeDebo queTeDebo = (QueTeDebo) o;
             queTeDebo.getDebts().forEach(debt ->this.addRecord(recordMapper.mapPaymentRecord(String.valueOf(arg), debt)));
     }
+
 }
