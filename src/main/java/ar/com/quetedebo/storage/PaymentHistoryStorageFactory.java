@@ -1,7 +1,5 @@
 package ar.com.quetedebo.storage;
 
-import ar.com.quetedebo.core.Discoverer;
-
 public class PaymentHistoryStorageFactory {
     private final Discoverer<PaymentHistoryStorage> discoverer;
 
